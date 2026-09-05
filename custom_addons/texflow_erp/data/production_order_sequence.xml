@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="seq_texflow_production_order" model="ir.sequence">
+        <field name="name">TexFlow Production Order</field>
+        <field name="code">texflow.production.order</field>
+        <field name="prefix">PO</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+    </record>
+
+</odoo>

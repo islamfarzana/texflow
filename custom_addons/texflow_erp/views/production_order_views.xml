@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- Production Order List View -->
+    <record id="view_texflow_production_order_list" model="ir.ui.view">
+        <field name="name">texflow.production.order.list</field>
+        <field name="model">texflow.production.order</field>
+        <field name="arch" type="xml">
+            <list string="Production Orders">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="style"/>
+                <field name="fabric"/>
+                <field name="color"/>
+                <field name="size"/>
+                <field name="quantity"/>
+                <field name="manufacturing_date"/>
+                <field name="production_status"/>
+                <field name="quality_status"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- Production Order Form View -->
+    <record id="view_texflow_production_order_form" model="ir.ui.view">
+        <field name="name">texflow.production.order.form</field>
+        <field name="model">texflow.production.order</field>
+        <field name="arch" type="xml">
+            <form string="Production Order">
+
+                <sheet>
+
+                    <div class="oe_title">
+                        <label for="name" string="Production Order"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+
+                        <group string="Product Information">
+                            <field name="product_id"/>
+                            <field name="style"/>
+                            <field name="fabric"/>
+                            <field name="color"/>
+                            <field name="size"/>
+                        </group>
+
+                        <group string="Production Information">
+                            <field name="quantity"/>
+                            <field name="manufacturing_date"/>
+                            <field name="production_status"/>
+                            <field name="quality_status"/>
+                        </group>
+
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+ <!-- Production Order Window Action -->
+    <record id="action_texflow_production_order" model="ir.actions.act_window">
+        <field name="name">Production Orders</field>
+        <field name="res_model">texflow.production.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- TexFlow ERP Root Menu -->
+    <menuitem
+        id="menu_texflow_root"
+        name="TexFlow ERP"
+        sequence="10"
+    />
+
+    <!-- Manufacturing Menu -->
+    <menuitem
+        id="menu_texflow_manufacturing"
+        name="Manufacturing"
+        parent="menu_texflow_root"
+        sequence="10"
+    />
+
+    <!-- Production Orders Menu -->
+    <menuitem
+        id="menu_texflow_production_orders"
+        name="Production Orders"
+        parent="menu_texflow_manufacturing"
+        action="action_texflow_production_order"
+        sequence="10"
+    />
+
+</odoo>
