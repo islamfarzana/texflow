@@ -49,22 +49,18 @@ class TexFlowProductionOrder(models.Model):
 
     style = fields.Char(
         string='Style',
-        required=True,
     )
 
     fabric = fields.Char(
         string='Fabric',
-        required=True,
     )
 
     color = fields.Char(
         string='Color',
-        required=True,
     )
 
     size = fields.Char(
         string='Size',
-        required=True,
     )
 
     quantity = fields.Float(
@@ -79,17 +75,35 @@ class TexFlowProductionOrder(models.Model):
         default=fields.Date.context_today,
     )
 
-    production_status = fields.Selection(
-        [
-            ('draft', 'Draft'),
-            ('in_progress', 'In Progress'),
-            ('completed', 'Completed'),
-            ('cancelled', 'Cancelled'),
-        ],
-        string='Production Status',
-        default='draft',
-        required=True,
+    assignee_ids = fields.Many2many(
+        'res.users',
+        'texflow_production_order_assignee_rel',
+        'order_id',
+        'user_id',
+        string='Assignees',
+        default=lambda self: self.env.user,
     )
+
+
+    def _default_stage_id(self):
+        """First stage (lowest sequence) becomes the default for new orders."""
+        return self.env['texflow.production.stage'].search(
+            [], order='sequence, id', limit=1
+        )
+
+    stage_id = fields.Many2one(
+        'texflow.production.stage',
+        string='Production Stage',
+        default=_default_stage_id,
+        group_expand='_read_group_stage_ids',
+        index=True,
+    )
+
+    @api.model
+    def _read_group_stage_ids(self, stages, domain):
+        """Always show every active stage as a Kanban column, even the
+        ones that currently have zero Production Orders."""
+        return stages.search([], order='sequence, id')
 
     quality_status = fields.Selection(
         [

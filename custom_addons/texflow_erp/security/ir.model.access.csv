@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_texflow_production_order,access_texflow_production_order,texflow_erp.model_texflow_production_order,base.group_user,1,1,1,1
+access_texflow_production_order,access_texflow_production_order,model_texflow_production_order,base.group_user,1,1,1,1
+access_texflow_production_stage,access_texflow_production_stage,model_texflow_production_stage,base.group_user,1,1,1,1

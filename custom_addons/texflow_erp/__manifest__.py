@@ -29,7 +29,9 @@ Main business areas:
 'data': [
     'security/ir.model.access.csv',
     'data/production_order_sequence.xml',
+    'data/production_stage_data.xml',
     'views/production_order_views.xml',
+    'views/production_stage_views.xml',
     'views/production_order_menu.xml',
 ],
     'demo': [],
