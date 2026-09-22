@@ -52,18 +52,26 @@
                                        decoration-success="quality_status == 'passed'"
                                        decoration-danger="quality_status == 'failed'"/>
                             </div>
-                            <div class="o_kanban_record_body text-muted">
-                                <field name="product_id"/> — <field name="style"/>,
-                                <field name="color"/>, <field name="size"/>
+                            <div class="o_kanban_record_body">
+                                <div class="text-muted">
+                                    <field name="product_id"/>
+                                </div>
+                                <div t-if="record.style.raw_value or record.color.raw_value or record.size.raw_value"
+                                     class="text-muted small">
+                                    <t t-if="record.style.raw_value"><field name="style"/></t>
+                                    <t t-if="record.color.raw_value">, <field name="color"/></t>
+                                    <t t-if="record.size.raw_value">, <field name="size"/></t>
+                                </div>
                             </div>
                             <div class="o_kanban_record_bottom d-flex justify-content-between align-items-center mt-2">
-                                <div class="oe_kanban_bottom_left">
+                                <div class="oe_kanban_bottom_left text-muted">
                                     <i class="fa fa-cubes me-1" title="Quantity"/>
                                     <field name="quantity"/>
-                                </div>
-                                <div class="oe_kanban_bottom_right text-muted">
-                                    <i class="fa fa-calendar me-1" title="Manufacturing Date"/>
+                                    <i class="fa fa-calendar ms-3 me-1" title="Manufacturing Date"/>
                                     <field name="manufacturing_date"/>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <field name="assignee_ids" widget="many2many_avatar_user"/>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +86,7 @@
         <field name="name">texflow.production.order.list</field>
         <field name="model">texflow.production.order</field>
         <field name="arch" type="xml">
-            <list string="Production Orders">
+            <list string="Production Orders" decoration-danger="quality_status == 'failed'">
                 <field name="name"/>
                 <field name="product_id"/>
                 <field name="style"/>
@@ -107,6 +115,12 @@
                 </header>
 
                 <sheet>
+
+                    <div class="alert alert-danger" role="alert"
+                         invisible="quality_status != 'failed'">
+                        <strong>Quality Check Failed</strong> — this order did not
+                        pass quality inspection. Review before proceeding.
+                    </div>
 
                     <div class="oe_title">
                         <label for="name" string="Production Order"/>
@@ -140,11 +154,11 @@
         </field>
     </record>
 
-       <!-- Production Order Window Action -->
+    <!-- Production Order Window Action -->
     <record id="action_texflow_production_order" model="ir.actions.act_window">
         <field name="name">Production Orders</field>
         <field name="res_model">texflow.production.order</field>
-        <field name="view_mode">kanban,list,form</field>
+        <field name="view_mode">kanban,list,form,graph,pivot</field>
         <field name="search_view_id" ref="view_texflow_production_order_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -153,7 +167,7 @@
         </field>
     </record>
 
-     <!-- Reporting Action: opens directly into Graph/Pivot analysis -->
+    <!-- Reporting Action: opens directly into Graph/Pivot analysis -->
     <record id="action_texflow_production_order_reporting" model="ir.actions.act_window">
         <field name="name">Production Reporting</field>
         <field name="res_model">texflow.production.order</field>
