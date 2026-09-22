@@ -140,16 +140,26 @@
         </field>
     </record>
 
-    <!-- Production Order Window Action -->
+       <!-- Production Order Window Action -->
     <record id="action_texflow_production_order" model="ir.actions.act_window">
         <field name="name">Production Orders</field>
         <field name="res_model">texflow.production.order</field>
         <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_texflow_production_order_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create your first Production Order
             </p>
         </field>
+    </record>
+
+     <!-- Reporting Action: opens directly into Graph/Pivot analysis -->
+    <record id="action_texflow_production_order_reporting" model="ir.actions.act_window">
+        <field name="name">Production Reporting</field>
+        <field name="res_model">texflow.production.order</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_texflow_production_order_search"/>
+        <field name="context">{'search_default_group_stage': 1}</field>
     </record>
 
 </odoo>

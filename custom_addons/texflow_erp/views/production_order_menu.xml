@@ -60,4 +60,13 @@
         sequence="10"
     />
 
+        <!-- Reporting Menu -->
+    <menuitem
+        id="menu_texflow_reporting"
+        name="Reporting"
+        parent="menu_texflow_root"
+        action="action_texflow_production_order_reporting"
+        sequence="80"
+    />
+
 </odoo>

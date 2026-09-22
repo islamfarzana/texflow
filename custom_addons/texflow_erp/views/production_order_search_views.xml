@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_texflow_production_order_search" model="ir.ui.view">
+        <field name="name">texflow.production.order.search</field>
+        <field name="model">texflow.production.order</field>
+        <field name="arch" type="xml">
+            <search string="Search Production Orders">
+                <field name="name" string="Production Order"/>
+                <field name="product_id"/>
+                <field name="style"/>
+                <field name="color"/>
+                <field name="assignee_ids"/>
+
+                <filter string="My Orders" name="my_orders"
+                        domain="[('assignee_ids', 'in', uid)]"/>
+
+                <separator/>
+
+                <filter string="Quality: Pending" name="quality_pending"
+                        domain="[('quality_status', '=', 'pending')]"/>
+                <filter string="Quality: Passed" name="quality_passed"
+                        domain="[('quality_status', '=', 'passed')]"/>
+                <filter string="Quality: Failed" name="quality_failed"
+                        domain="[('quality_status', '=', 'failed')]"/>
+
+                <separator/>
+
+                <filter string="Late" name="late"
+                        domain="[('manufacturing_date', '&lt;', context_today().strftime('%Y-%m-%d')), ('stage_id.fold', '=', False)]"/>
+
+                <group>
+                    <filter string="Stage" name="group_stage"
+                            context="{'group_by': 'stage_id'}"/>
+                    <filter string="Assignee" name="group_assignee"
+                            context="{'group_by': 'assignee_ids'}"/>
+                    <filter string="Quality Status" name="group_quality"
+                            context="{'group_by': 'quality_status'}"/>
+                    <filter string="Product" name="group_product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter string="Manufacturing Date" name="group_manufacturing_date"
+                            context="{'group_by': 'manufacturing_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

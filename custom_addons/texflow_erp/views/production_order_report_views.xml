@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Graph View: quantity produced, grouped by stage / date -->
+    <record id="view_texflow_production_order_graph" model="ir.ui.view">
+        <field name="name">texflow.production.order.graph</field>
+        <field name="model">texflow.production.order</field>
+        <field name="arch" type="xml">
+            <graph string="Production Orders Analysis" type="bar">
+                <field name="manufacturing_date" type="row" interval="month"/>
+                <field name="stage_id" type="col"/>
+                <field name="quantity" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View: cross-tab of quantity by stage / quality / assignee / date -->
+    <record id="view_texflow_production_order_pivot" model="ir.ui.view">
+        <field name="name">texflow.production.order.pivot</field>
+        <field name="model">texflow.production.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Production Orders Analysis">
+                <field name="stage_id" type="row"/>
+                <field name="quality_status" type="row"/>
+                <field name="manufacturing_date" type="col" interval="month"/>
+                <field name="quantity" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+</odoo>
