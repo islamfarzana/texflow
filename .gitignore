@@ -75,4 +75,4 @@ odoo-venv/
 
 # Custom project - track this
 !custom_addons/
-!custom_addons/texflow_erp/run.sh
+/run.sh
