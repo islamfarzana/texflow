@@ -37,6 +37,7 @@
                 <field name="manufacturing_date"/>
                 <field name="quality_status"/>
                 <field name="assignee_ids"/>
+                <field name="material_consumed"/>
                 <field name="stage_id"/>
                 <templates>
                     <t t-name="card">
@@ -69,6 +70,9 @@
                                     <field name="quantity"/>
                                     <i class="fa fa-calendar ms-3 me-1" title="Manufacturing Date"/>
                                     <field name="manufacturing_date"/>
+                                    <span t-if="record.material_consumed.raw_value" class="ms-3">
+                                        <i class="fa fa-check-circle text-success" title="Material consumed"/>
+                                    </span>
                                 </div>
                                 <div class="oe_kanban_bottom_right">
                                     <field name="assignee_ids" widget="many2many_avatar_user"/>
@@ -96,6 +100,8 @@
                 <field name="quantity"/>
                 <field name="manufacturing_date"/>
                 <field name="assignee_ids" widget="many2many_avatar_user"/>
+                <field name="raw_material_id"/>
+                <field name="material_consumed"/>
                 <field name="stage_id"/>
                 <field name="quality_status"/>
             </list>
@@ -110,6 +116,9 @@
             <form string="Production Order">
 
                 <header>
+                    <button name="action_consume_material" type="object"
+                            string="Consume Material" class="oe_highlight"
+                            invisible="material_consumed or not raw_material_id or not material_qty"/>
                     <field name="stage_id" widget="statusbar"
                            options="{'clickable': '1', 'fold_field': 'fold'}"/>
                 </header>
@@ -120,6 +129,12 @@
                          invisible="quality_status != 'failed'">
                         <strong>Quality Check Failed</strong> — this order did not
                         pass quality inspection. Review before proceeding.
+                    </div>
+
+                    <div class="alert alert-success" role="alert"
+                         invisible="not material_consumed">
+                        <strong>Material Consumed</strong> — raw material stock has
+                        been deducted for this order.
                     </div>
 
                     <div class="oe_title">
@@ -146,6 +161,24 @@
                             <field name="assignee_ids" widget="many2many_avatar_user"/>
                         </group>
 
+                    </group>
+
+                    <group string="Raw Material (Stock)">
+                        <group>
+                            <field name="raw_material_id"
+                                   placeholder="e.g. Cotton Fabric Roll"
+                                   readonly="material_consumed"/>
+                            <field name="material_qty"
+                                   placeholder="e.g. 150"
+                                   readonly="material_consumed"/>
+                            <field name="material_uom_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="material_available_qty" readonly="1"/>
+                            <field name="material_consumed" readonly="1"/>
+                            <field name="stock_move_id" readonly="1"
+                                   invisible="not stock_move_id"/>
+                        </group>
                     </group>
 
                 </sheet>

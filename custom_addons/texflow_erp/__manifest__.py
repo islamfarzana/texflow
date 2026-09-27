@@ -25,6 +25,7 @@ Main business areas:
     'depends': [
         'base',
         'product',
+        'stock',
     ],
 'data': [
     'security/ir.model.access.csv',
