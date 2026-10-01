@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Purchase Orders: reuse Odoo's native purchase.order model and views -->
+    <record id="action_texflow_purchase_order" model="ir.actions.act_window">
+        <field name="name">Purchase Orders</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Purchase Order
+            </p>
+            <p>
+                Order raw materials (fabric, trims, accessories) from your
+                vendors. Confirming and receiving a Purchase Order will
+                automatically increase the on-hand stock of the ordered
+                material.
+            </p>
+        </field>
+    </record>
+
+    <!-- Vendors: standard partners filtered to suppliers -->
+    <record id="action_texflow_vendors" model="ir.actions.act_window">
+        <field name="name">Vendors</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('supplier_rank', '&gt;', 0)]</field>
+        <field name="context">{'default_supplier_rank': 1, 'res_partner_search_mode': 'supplier'}</field>
+    </record>
+
+    <!-- Purchasing menu (inside TexFlow ERP's menu bar) -->
+    <menuitem
+        id="menu_texflow_purchasing"
+        name="Purchasing"
+        parent="menu_texflow_root"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_texflow_purchase_orders"
+        name="Purchase Orders"
+        parent="menu_texflow_purchasing"
+        action="action_texflow_purchase_order"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_texflow_vendors"
+        name="Vendors"
+        parent="menu_texflow_purchasing"
+        action="action_texflow_vendors"
+        sequence="20"
+    />
+
+</odoo>

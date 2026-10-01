@@ -26,6 +26,7 @@ Main business areas:
         'base',
         'product',
         'stock',
+        'purchase',
     ],
 'data': [
     'security/ir.model.access.csv',
@@ -36,6 +37,7 @@ Main business areas:
     'views/production_order_report_views.xml',
     'views/production_order_views.xml',
     'views/production_order_menu.xml',
+    'views/purchase_menu.xml',
 ],
     'demo': [],
     'installable': True,
